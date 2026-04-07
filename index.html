@@ -8,7 +8,7 @@
 <meta property="og:title" content="Stillward — Dream interpretation through dialogue">
 <meta property="og:description" content="Speak your dream. Discover what it knows.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://stillward.app">
+<meta property="og:url" content="https://stillward.cc">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +25,7 @@
     --linen: #e0dfd8;
     --warm-white: #f5f3ee;
     --dark-ink: #2a2a3e;
+    --accent-green: #5dcaa5;
   }
 
   html { scroll-behavior: smooth; }
@@ -38,7 +39,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ---- Starfield background ---- */
+  /* ---- Starfield ---- */
   .stars {
     position: fixed;
     inset: 0;
@@ -63,6 +64,7 @@
   /* ---- Layout ---- */
   .page { position: relative; z-index: 1; }
 
+  /* ---- Hero ---- */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -73,14 +75,12 @@
     text-align: center;
   }
 
-  /* ---- Icon ---- */
   .icon-mark {
     opacity: 0;
     animation: fadeUp 1.2s ease-out 0.2s forwards;
     margin-bottom: 32px;
   }
 
-  /* ---- Typography ---- */
   .wordmark {
     font-family: 'Caveat', cursive;
     font-size: clamp(48px, 10vw, 72px);
@@ -111,13 +111,22 @@
     animation: fadeUp 1.2s ease-out 1.1s forwards;
   }
 
-  /* ---- Email form ---- */
+  /* ---- Email form (shared) ---- */
   .form-wrap {
     margin-top: 48px;
     opacity: 0;
     animation: fadeUp 1.2s ease-out 1.4s forwards;
     width: 100%;
     max-width: 420px;
+  }
+  .form-wrap-bottom {
+    margin-top: 0;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: none;
+  }
+  .form-wrap-bottom.visible {
+    animation: fadeUp 0.8s ease-out forwards;
   }
 
   .email-form {
@@ -184,7 +193,7 @@
     text-align: center;
     min-height: 20px;
   }
-  .form-message.success { color: #5dcaa5; }
+  .form-message.success { color: var(--accent-green); }
   .form-message.error { color: #f09595; }
 
   /* ---- Success state ---- */
@@ -221,6 +230,206 @@
     line-height: 1.6;
   }
 
+  /* ---- Section divider ---- */
+  .section-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(139,134,176,0.2);
+    margin: 0 auto 56px;
+  }
+
+  /* ---- Belief / philosophy ---- */
+  .belief {
+    padding: 100px 24px 40px;
+    max-width: 560px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .belief-item {
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .belief-item.visible {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  .belief-icon {
+    width: 32px;
+    height: 32px;
+    margin: 0 auto 16px;
+    opacity: 0.5;
+  }
+
+  .belief-heading {
+    font-family: 'Caveat', cursive;
+    font-size: 24px;
+    color: var(--linen);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .belief-body {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--lav-muted);
+    line-height: 1.7;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .belief-coda {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(22px, 4.5vw, 28px);
+    color: var(--linen);
+    line-height: 1.4;
+    margin-top: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .belief-coda.visible {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  /* ---- Session mockup ---- */
+  .session {
+    padding: 40px 24px 100px;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .session-heading {
+    font-family: 'Caveat', cursive;
+    font-size: 32px;
+    color: var(--linen);
+    text-align: center;
+    margin-bottom: 16px;
+    opacity: 0; transform: translateY(20px);
+  }
+  .session-heading.visible { animation: fadeUp 0.8s ease-out forwards; }
+
+  .session-subheading {
+    font-size: 14px;
+    color: var(--lav-muted);
+    text-align: center;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 48px;
+    opacity: 0; transform: translateY(20px);
+  }
+  .session-subheading.visible { animation: fadeUp 0.8s ease-out 0.15s forwards; }
+
+  .session-step {
+    opacity: 0; transform: translateY(20px);
+  }
+  .session-step.visible { animation: fadeUp 0.8s ease-out forwards; }
+
+  .step-label {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--lav-muted);
+    opacity: 0.6;
+    margin-bottom: 10px;
+    padding-left: 4px;
+  }
+
+  .msg-bubble {
+    border-radius: 16px;
+    padding: 16px 20px;
+    font-size: 14px;
+    line-height: 1.65;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+
+  .msg-user {
+    background: rgba(139,134,176,0.1);
+    border: 1px solid rgba(139,134,176,0.12);
+    color: var(--lav-light);
+    margin-left: 32px;
+  }
+
+  .msg-ai {
+    background: rgba(42,31,61,0.5);
+    border: 1px solid rgba(139,134,176,0.1);
+    color: var(--linen);
+    margin-right: 32px;
+  }
+
+  .readings { margin-bottom: 28px; }
+
+  .reading-card {
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-size: 14px;
+    line-height: 1.65;
+    font-weight: 300;
+    color: var(--lav-light);
+    background: rgba(42,31,61,0.35);
+    border: 1px solid rgba(139,134,176,0.1);
+    margin-bottom: 10px;
+    position: relative;
+    margin-right: 32px;
+  }
+
+  .reading-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--lav-muted);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .reading-card.chosen {
+    border-color: rgba(93,202,165,0.3);
+    background: rgba(93,202,165,0.06);
+  }
+  .reading-card.chosen::after {
+    content: '✓ this lands';
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent-green);
+  }
+
+  .insight-card {
+    border-radius: 16px;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(42,31,61,0.6), rgba(26,26,46,0.8));
+    border: 1px solid rgba(139,134,176,0.15);
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .insight-card .insight-label {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--lav-muted);
+    opacity: 0.6;
+    margin-bottom: 12px;
+  }
+
+  .insight-card p {
+    font-family: 'Caveat', cursive;
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--linen);
+  }
+
+  .step-connector {
+    width: 1px;
+    height: 24px;
+    background: rgba(139,134,176,0.15);
+    margin: 0 auto 28px;
+  }
+
   /* ---- Features ---- */
   .features {
     padding: 80px 24px 100px;
@@ -234,28 +443,19 @@
     color: var(--linen);
     text-align: center;
     margin-bottom: 56px;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 0; transform: translateY(20px);
   }
-  .features-heading.visible {
-    animation: fadeUp 0.8s ease-out forwards;
-  }
+  .features-heading.visible { animation: fadeUp 0.8s ease-out forwards; }
 
-  .feature-list {
-    display: grid;
-    gap: 32px;
-  }
+  .feature-list { display: grid; gap: 32px; }
 
   .feature {
     display: flex;
     gap: 20px;
     align-items: flex-start;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 0; transform: translateY(20px);
   }
-  .feature.visible {
-    animation: fadeUp 0.8s ease-out forwards;
-  }
+  .feature.visible { animation: fadeUp 0.8s ease-out forwards; }
 
   .feature-icon {
     flex-shrink: 0;
@@ -283,6 +483,99 @@
     line-height: 1.6;
   }
 
+  /* ---- Pricing ---- */
+  .pricing {
+    padding: 60px 24px 80px;
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .pricing-heading {
+    font-family: 'Caveat', cursive;
+    font-size: 28px;
+    color: var(--linen);
+    margin-bottom: 24px;
+    opacity: 0; transform: translateY(20px);
+  }
+  .pricing-heading.visible { animation: fadeUp 0.8s ease-out forwards; }
+
+  .pricing-cards {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    opacity: 0; transform: translateY(20px);
+  }
+  .pricing-cards.visible { animation: fadeUp 0.8s ease-out 0.15s forwards; }
+
+  .price-card {
+    flex: 1;
+    max-width: 160px;
+    border-radius: 14px;
+    padding: 24px 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(139,134,176,0.12);
+  }
+  .price-card.highlight {
+    border-color: rgba(93,202,165,0.25);
+    background: rgba(93,202,165,0.04);
+  }
+
+  .price-card .price-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--lav-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .price-card .price-amount {
+    font-family: 'Caveat', cursive;
+    font-size: 32px;
+    color: var(--linen);
+    line-height: 1;
+  }
+
+  .price-card .price-period {
+    font-size: 12px;
+    color: var(--lav-muted);
+    margin-top: 4px;
+  }
+
+  .price-card .price-note {
+    font-size: 11px;
+    color: var(--accent-green);
+    margin-top: 8px;
+  }
+
+  /* ---- Bottom CTA ---- */
+  .bottom-cta {
+    padding: 60px 24px 100px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bottom-cta-heading {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(28px, 6vw, 36px);
+    color: var(--linen);
+    margin-bottom: 12px;
+    opacity: 0; transform: translateY(20px);
+  }
+  .bottom-cta-heading.visible { animation: fadeUp 0.8s ease-out forwards; }
+
+  .bottom-cta-sub {
+    font-size: 14px;
+    color: var(--lav-muted);
+    font-weight: 300;
+    margin-bottom: 32px;
+    opacity: 0; transform: translateY(20px);
+  }
+  .bottom-cta-sub.visible { animation: fadeUp 0.8s ease-out 0.15s forwards; }
+
   /* ---- Footer ---- */
   .footer {
     text-align: center;
@@ -295,13 +588,11 @@
     opacity: 0.5;
   }
 
-  /* ---- Animations ---- */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ---- Responsive ---- */
   @media (max-width: 520px) {
     .email-form {
       flex-direction: column;
@@ -311,20 +602,21 @@
       border-top: 1px solid rgba(139,134,176,0.1);
     }
     .feature { gap: 16px; }
+    .msg-user { margin-left: 16px; }
+    .msg-ai, .reading-card { margin-right: 16px; }
+    .pricing-cards { flex-direction: column; align-items: center; }
+    .price-card { max-width: 240px; width: 100%; }
   }
 </style>
 </head>
 <body>
 
-<!-- Starfield -->
 <div class="stars" id="stars"></div>
 
 <div class="page">
 
-  <!-- Hero -->
+  <!-- ===== HERO ===== -->
   <section class="hero">
-
-    <!-- Icon mark -->
     <div class="icon-mark">
       <svg width="64" height="83" viewBox="0 0 100 130" fill="none">
         <path d="M50 12 Q78 40 50 68" stroke="#e0dfd8" stroke-width="2.2" stroke-linecap="round"/>
@@ -334,48 +626,157 @@
       </svg>
     </div>
 
-    <!-- Wordmark -->
     <h1 class="wordmark">stillward</h1>
     <p class="tagline">Speak your dream. Discover what it knows.</p>
 
-    <!-- Pitch -->
     <p class="pitch">
       A guided dialogue that helps you interpret your dreams — not by delivering 
       AI readouts, but by asking the right questions first, then reflecting meaning 
       back through your own words.
     </p>
 
-    <!-- Email signup -->
     <div class="form-wrap" id="form-wrap">
-      <div class="email-form" id="email-form-container">
-        <input
-          type="email"
-          id="email-input"
-          placeholder="your@email.com"
-          autocomplete="email"
-          required
-        >
-        <button type="button" id="submit-btn" onclick="handleSubmit()">Join waitlist</button>
+      <div class="email-form">
+        <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email" required>
+        <button type="button" id="submit-btn" onclick="handleSubmit('email-input','submit-btn','form-message','form-wrap')">Join waitlist</button>
       </div>
       <p class="form-note">Free. No spam. You'll be first to try Stillward.</p>
       <div class="form-message" id="form-message"></div>
     </div>
 
-    <!-- Success state (hidden by default) -->
     <div class="success-state" id="success-state">
       <div class="check">✓</div>
       <h3>You're on the list</h3>
       <p>We'll let you know when Stillward is ready.<br>Thank you for trusting us with your dreams.</p>
     </div>
-
   </section>
 
-  <!-- Features -->
+
+  <!-- ===== BELIEF ===== -->
+  <section class="belief">
+    <div class="belief-item" data-animate>
+      <div class="belief-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#8b86b0" stroke-width="1.2" stroke-linecap="round" width="32" height="32">
+          <path d="M12 3C7 3 3 7 3 12C3 17 7 21 12 21C17 21 21 17 21 12C21 7 17 3 12 3Z"/>
+          <path d="M12 8V12L15 15"/>
+        </svg>
+      </div>
+      <h3 class="belief-heading">Some dreams carry wisdom</h3>
+      <p class="belief-body">
+        Not every dream is a message — but the ones that stay with you, 
+        the ones you're still thinking about over morning coffee, those 
+        are carrying something. A feeling you need to name. A truth 
+        your waking mind has been stepping around. The wisdom is already 
+        there. It just needs a way to reach you.
+      </p>
+    </div>
+
+    <div class="belief-item" data-animate>
+      <div class="belief-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#8b86b0" stroke-width="1.2" stroke-linecap="round" width="32" height="32">
+          <path d="M20 12C20 16.4 16.4 20 12 20C7.6 20 4 16.4 4 12C4 7.6 7.6 4 12 4"/>
+          <path d="M15 4.5C17 5.5 18.5 7 19.5 9"/>
+          <circle cx="12" cy="12" r="2"/>
+        </svg>
+      </div>
+      <h3 class="belief-heading">They speak your own language</h3>
+      <p class="belief-body">
+        No one else's dream dictionary can decode what your mind is saying. 
+        A locked door in your dream doesn't mean what it means in someone 
+        else's. Your dreams use your memories, your fears, your private 
+        symbols. The meaning is already yours — it just needs drawing out.
+      </p>
+    </div>
+
+    <div class="belief-item" data-animate>
+      <div class="belief-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#8b86b0" stroke-width="1.2" stroke-linecap="round" width="32" height="32">
+          <path d="M12 18.5C12 18.5 3 14 3 8.5C3 5 6 3 8.5 4.5C10 5.5 11.5 7 12 8C12.5 7 14 5.5 15.5 4.5C18 3 21 5 21 8.5C21 14 12 18.5 12 18.5Z"/>
+        </svg>
+      </div>
+      <h3 class="belief-heading">Open your heart to what surfaces</h3>
+      <p class="belief-body">
+        Interpretation isn't analysis. It's listening. When you stop trying to 
+        solve the dream and start feeling what it brought up, the meaning 
+        reveals itself. Not as a verdict — as a recognition. Something you 
+        already knew, now finally seen.
+      </p>
+    </div>
+
+    <p class="belief-coda" data-animate>
+      You can interpret your own dreams.<br>
+      Stillward just helps you hear what they're saying.
+    </p>
+  </section>
+
+
+  <!-- ===== SESSION WALKTHROUGH ===== -->
+  <section class="session">
+    <h2 class="session-heading" data-animate>A session looks like this</h2>
+    <p class="session-subheading" data-animate>Real dialogue, not a readout. Your words shape the meaning.</p>
+
+    <div class="session-step" data-animate>
+      <div class="step-label">You speak or type your dream</div>
+      <div class="msg-bubble msg-user">
+        I was in a house I didn't recognise but somehow knew was mine. There was a locked room at the end of a corridor. The key wouldn't fit.
+      </div>
+    </div>
+
+    <div class="session-step" data-animate>
+      <div class="step-label">Stillward asks about feeling first</div>
+      <div class="msg-bubble msg-ai">
+        Before anything — when you stood at that door, was the anxiety about not getting in, or about what might be on the other side?
+      </div>
+    </div>
+
+    <div class="session-step" data-animate>
+      <div class="msg-bubble msg-user">
+        What might be inside. I wanted to open it and was afraid to.
+      </div>
+    </div>
+
+    <div class="step-connector"></div>
+
+    <div class="session-step" data-animate>
+      <div class="step-label">Two angles — you choose what resonates</div>
+      <div class="readings">
+        <div class="reading-card chosen">
+          <span class="reading-label">One way to see this</span>
+          The room is a part of yourself not yet ready to face — not threatening, just unintegrated. The key that doesn't fit suggests your current approach won't open it.
+        </div>
+        <div class="reading-card">
+          <span class="reading-label">Another angle</span>
+          You are the house, the corridor, and the locked room. The dream asks what you've been keeping from yourself.
+        </div>
+      </div>
+    </div>
+
+    <div class="step-connector"></div>
+
+    <div class="session-step" data-animate>
+      <div class="step-label">Your session insight</div>
+      <div class="insight-card">
+        <div class="insight-label">Built from what resonated</div>
+        <p>The locked room holds something unintegrated rather than threatening. The way in hasn't revealed itself yet — and that's part of the process, not a failure.</p>
+      </div>
+    </div>
+
+    <div class="session-step" data-animate>
+      <div class="step-label">Saved to your symbol library</div>
+      <div class="msg-bubble msg-ai" style="text-align:center; font-size:13px;">
+        <span style="font-size:16px;">🔒</span> <strong style="color:var(--linen);">Locked door</strong> <span style="color:var(--lav-muted);">→</span> a part of self not yet ready to face<br>
+        <span style="font-size:11px; color:var(--lav-muted); display:block; margin-top:6px;">Next time a door appears, Stillward remembers what it meant to you.</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== FEATURES ===== -->
   <section class="features">
+    <div class="section-divider"></div>
     <h2 class="features-heading" data-animate>Not another dream dictionary</h2>
 
     <div class="feature-list">
-
       <div class="feature" data-animate>
         <div class="feature-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="#8b86b0" stroke-width="1.5" stroke-linecap="round">
@@ -439,11 +840,57 @@
           <p>Your dreams are yours. No data sold, no ad tracking, no social features. Just a quiet space between you and your unconscious.</p>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- Footer -->
+
+  <!-- ===== PRICING ===== -->
+  <section class="pricing">
+    <div class="section-divider"></div>
+    <h2 class="pricing-heading" data-animate>Simple, honest pricing</h2>
+    <div class="pricing-cards" data-animate>
+      <div class="price-card">
+        <div class="price-name">Free trial</div>
+        <div class="price-amount">$0</div>
+        <div class="price-period">7 days · 3 sessions</div>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Monthly</div>
+        <div class="price-amount">$8</div>
+        <div class="price-period">per month</div>
+      </div>
+      <div class="price-card highlight">
+        <div class="price-name">Waitlist</div>
+        <div class="price-amount">$49</div>
+        <div class="price-period">lifetime · one-time</div>
+        <div class="price-note">First 50 only</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== BOTTOM CTA ===== -->
+  <section class="bottom-cta">
+    <div class="section-divider"></div>
+    <h2 class="bottom-cta-heading" data-animate>Your dreams are trying to tell you something</h2>
+    <p class="bottom-cta-sub" data-animate>Join the waitlist. Be first to listen.</p>
+
+    <div class="form-wrap form-wrap-bottom" data-animate style="max-width:420px;">
+      <div class="email-form">
+        <input type="email" id="email-input-bottom" placeholder="your@email.com" autocomplete="email" required>
+        <button type="button" id="submit-btn-bottom" onclick="handleSubmit('email-input-bottom','submit-btn-bottom','form-message-bottom')">Join waitlist</button>
+      </div>
+      <div class="form-message" id="form-message-bottom"></div>
+    </div>
+
+    <div class="success-state" id="success-state-bottom">
+      <div class="check">✓</div>
+      <h3>You're on the list</h3>
+      <p>We'll let you know when Stillward is ready.</p>
+    </div>
+  </section>
+
+
   <footer class="footer">
     <p>Stillward — coming soon to iOS</p>
   </footer>
@@ -478,13 +925,10 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 
-// ---- Supabase waitlist ----
+// ---- Supabase ----
 // ═══════════════════════════════════════════════════
-// SETUP INSTRUCTIONS:
-//
 // 1. Create a Supabase project at https://supabase.com
-//
-// 2. Run this SQL in the Supabase SQL Editor:
+// 2. Run this SQL:
 //
 //    create table early_access (
 //      id uuid default gen_random_uuid() primary key,
@@ -492,32 +936,23 @@ document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
 //      created_at timestamptz default now(),
 //      source text default 'waitlist'
 //    );
-//
-//    -- Enable Row Level Security
 //    alter table early_access enable row level security;
-//
-//    -- Allow anonymous inserts only (no reads)
 //    create policy "Allow anonymous inserts"
-//      on early_access for insert
-//      to anon
+//      on early_access for insert to anon
 //      with check (true);
 //
-// 3. Replace the two values below with your project's:
-//    - SUPABASE_URL: Settings → API → Project URL
-//    - SUPABASE_ANON_KEY: Settings → API → anon/public key
-//
+// 3. Replace the values below (Settings → API)
 // ═══════════════════════════════════════════════════
 
 const SUPABASE_URL = 'https://mlqfdigfcifxixamcsne.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_8VUsKiLhSspAps4p6lpfxg_1eBoGUtR';
 
-async function handleSubmit() {
-  const input = document.getElementById('email-input');
-  const btn = document.getElementById('submit-btn');
-  const msg = document.getElementById('form-message');
+async function handleSubmit(inputId, btnId, msgId, hideId) {
+  const input = document.getElementById(inputId);
+  const btn = document.getElementById(btnId);
+  const msg = document.getElementById(msgId);
   const email = input.value.trim().toLowerCase();
 
-  // Validate
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     msg.textContent = 'Please enter a valid email.';
     msg.className = 'form-message error';
@@ -541,10 +976,10 @@ async function handleSubmit() {
     });
 
     if (res.ok || res.status === 201) {
-      // Show success state
-      document.getElementById('form-wrap').style.display = 'none';
-      document.querySelector('.pitch').style.display = 'none';
-      document.getElementById('success-state').classList.add('show');
+      document.querySelectorAll('.form-wrap').forEach(f => f.style.display = 'none');
+      const pitch = document.querySelector('.pitch');
+      if (pitch) pitch.style.display = 'none';
+      document.querySelectorAll('.success-state').forEach(s => s.classList.add('show'));
     } else if (res.status === 409) {
       msg.textContent = "You're already on the list — we'll be in touch.";
       msg.className = 'form-message success';
@@ -561,9 +996,10 @@ async function handleSubmit() {
   }
 }
 
-// Submit on Enter
-document.getElementById('email-input').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') handleSubmit();
+document.querySelectorAll('.email-form input').forEach(input => {
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') input.closest('.email-form').querySelector('button').click();
+  });
 });
 </script>
 </body>
