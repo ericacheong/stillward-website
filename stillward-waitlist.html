@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stillward — Speak your dream. Discover what it knows.</title>
+<meta name="description" content="Stillward is a guided dialogue app that helps you interpret your dreams — not by delivering AI readouts, but by asking the right questions first.">
+<meta property="og:title" content="Stillward — Dream interpretation through dialogue">
+<meta property="og:description" content="Speak your dream. Discover what it knows.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stillward.app">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+  :root {
+    --midnight: #0d0d1a;
+    --deep-navy: #1a1a2e;
+    --plum: #2a1f3d;
+    --lav-muted: #8b86b0;
+    --lav-light: #c4bfe0;
+    --linen: #e0dfd8;
+    --warm-white: #f5f3ee;
+    --dark-ink: #2a2a3e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--midnight);
+    color: var(--linen);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- Starfield background ---- */
+  .stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .stars span {
+    position: absolute;
+    width: 1.5px;
+    height: 1.5px;
+    background: var(--lav-muted);
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle var(--dur, 4s) ease-in-out var(--delay, 0s) infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.05; }
+    50% { opacity: var(--peak, 0.4); }
+  }
+
+  /* ---- Layout ---- */
+  .page { position: relative; z-index: 1; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  /* ---- Icon ---- */
+  .icon-mark {
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 0.2s forwards;
+    margin-bottom: 32px;
+  }
+
+  /* ---- Typography ---- */
+  .wordmark {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(48px, 10vw, 72px);
+    font-weight: 400;
+    color: var(--linen);
+    line-height: 1;
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 0.5s forwards;
+  }
+
+  .tagline {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(18px, 4vw, 24px);
+    color: var(--lav-muted);
+    margin-top: 12px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 0.8s forwards;
+  }
+
+  .pitch {
+    max-width: 480px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--lav-light);
+    font-weight: 300;
+    margin-top: 40px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 1.1s forwards;
+  }
+
+  /* ---- Email form ---- */
+  .form-wrap {
+    margin-top: 48px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease-out 1.4s forwards;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .email-form {
+    display: flex;
+    gap: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(139,134,176,0.15);
+    transition: border-color 0.3s;
+  }
+  .email-form:focus-within {
+    border-color: rgba(139,134,176,0.4);
+  }
+
+  .email-form input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 16px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--linen);
+    outline: none;
+    min-width: 0;
+  }
+  .email-form input::placeholder {
+    color: var(--lav-muted);
+    opacity: 0.6;
+  }
+
+  .email-form button {
+    background: var(--plum);
+    border: none;
+    padding: 16px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--lav-light);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+  }
+  .email-form button:hover {
+    background: #362a52;
+    color: var(--linen);
+  }
+  .email-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .form-note {
+    font-size: 12px;
+    color: var(--lav-muted);
+    opacity: 0.5;
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .form-message {
+    margin-top: 16px;
+    font-size: 14px;
+    text-align: center;
+    min-height: 20px;
+  }
+  .form-message.success { color: #5dcaa5; }
+  .form-message.error { color: #f09595; }
+
+  /* ---- Success state ---- */
+  .success-state {
+    display: none;
+    text-align: center;
+  }
+  .success-state.show {
+    display: block;
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+  .success-state .check {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(93,202,165,0.1);
+    border: 1px solid rgba(93,202,165,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 20px;
+  }
+  .success-state h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 28px;
+    color: var(--linen);
+    font-weight: 400;
+  }
+  .success-state p {
+    font-size: 14px;
+    color: var(--lav-muted);
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  /* ---- Features ---- */
+  .features {
+    padding: 80px 24px 100px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .features-heading {
+    font-family: 'Caveat', cursive;
+    font-size: 32px;
+    color: var(--linen);
+    text-align: center;
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .features-heading.visible {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  .feature-list {
+    display: grid;
+    gap: 32px;
+  }
+
+  .feature {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .feature.visible {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  .feature-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(139,134,176,0.08);
+    border: 1px solid rgba(139,134,176,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .feature-icon svg { width: 18px; height: 18px; }
+
+  .feature h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--linen);
+    margin-bottom: 4px;
+  }
+  .feature p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--lav-muted);
+    line-height: 1.6;
+  }
+
+  /* ---- Footer ---- */
+  .footer {
+    text-align: center;
+    padding: 40px 24px 48px;
+    border-top: 1px solid rgba(139,134,176,0.08);
+  }
+  .footer p {
+    font-size: 12px;
+    color: var(--lav-muted);
+    opacity: 0.5;
+  }
+
+  /* ---- Animations ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 520px) {
+    .email-form {
+      flex-direction: column;
+      border-radius: 12px;
+    }
+    .email-form button {
+      border-top: 1px solid rgba(139,134,176,0.1);
+    }
+    .feature { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Starfield -->
+<div class="stars" id="stars"></div>
+
+<div class="page">
+
+  <!-- Hero -->
+  <section class="hero">
+
+    <!-- Icon mark -->
+    <div class="icon-mark">
+      <svg width="64" height="83" viewBox="0 0 100 130" fill="none">
+        <path d="M50 12 Q78 40 50 68" stroke="#e0dfd8" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M50 12 Q22 40 50 68" stroke="#e0dfd8" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="50" cy="40" r="4.5" fill="#e0dfd8"/>
+        <path d="M50 68 Q50 78 56 82 Q64 88 56 94 Q46 100 42 92 Q36 82 48 76 Q58 72 64 82 Q72 96 56 104 Q38 112 32 96" stroke="#e0dfd8" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Wordmark -->
+    <h1 class="wordmark">stillward</h1>
+    <p class="tagline">Speak your dream. Discover what it knows.</p>
+
+    <!-- Pitch -->
+    <p class="pitch">
+      A guided dialogue that helps you interpret your dreams — not by delivering 
+      AI readouts, but by asking the right questions first, then reflecting meaning 
+      back through your own words.
+    </p>
+
+    <!-- Email signup -->
+    <div class="form-wrap" id="form-wrap">
+      <div class="email-form" id="email-form-container">
+        <input
+          type="email"
+          id="email-input"
+          placeholder="your@email.com"
+          autocomplete="email"
+          required
+        >
+        <button type="button" id="submit-btn" onclick="handleSubmit()">Join waitlist</button>
+      </div>
+      <p class="form-note">Free. No spam. You'll be first to try Stillward.</p>
+      <div class="form-message" id="form-message"></div>
+    </div>
+
+    <!-- Success state (hidden by default) -->
+    <div class="success-state" id="success-state">
+      <div class="check">✓</div>
+      <h3>You're on the list</h3>
+      <p>We'll let you know when Stillward is ready.<br>Thank you for trusting us with your dreams.</p>
+    </div>
+
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <h2 class="features-heading" data-animate>Not another dream dictionary</h2>
+
+    <div class="feature-list">
+
+      <div class="feature" data-animate>
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8b86b0" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 18.5C12 18.5 3 14 3 8.5C3 5 6 3 8.5 4.5C10 5.5 11.5 7 12 8C12.5 7 14 5.5 15.5 4.5C18 3 21 5 21 8.5C21 14 12 18.5 12 18.5Z"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Questions before interpretation</h3>
+          <p>Stillward asks about how the dream felt before it tells you what it might mean. Your feelings guide the reading.</p>
+        </div>
+      </div>
+
+      <div class="feature" data-animate>
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8b86b0" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 3C7 3 3 7 3 12C3 17 7 21 12 21"/>
+            <path d="M12 3C17 3 21 7 21 12"/>
+            <path d="M12 8V12L15 15"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Voice-first capture</h3>
+          <p>One tap. Speak your dream before it fades. No structure, no prompts — just your raw memory, preserved.</p>
+        </div>
+      </div>
+
+      <div class="feature" data-animate>
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8b86b0" stroke-width="1.5" stroke-linecap="round">
+            <path d="M4 12H8L10 4L14 20L16 12H20"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Multiple angles, you choose</h3>
+          <p>For each symbol, two different readings. You tap what resonates. If neither lands, a third appears from a different lens entirely.</p>
+        </div>
+      </div>
+
+      <div class="feature" data-animate>
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8b86b0" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 5V3M12 21V19M5 12H3M21 12H19M7.05 7.05L5.64 5.64M18.36 18.36L16.95 16.95M7.05 16.95L5.64 18.36M18.36 5.64L16.95 7.05"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Your own symbol library</h3>
+          <p>Every resonated reading builds your personal lexicon. Over time, Stillward remembers what water, doors, and falling mean to you — not in general.</p>
+        </div>
+      </div>
+
+      <div class="feature" data-animate>
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8b86b0" stroke-width="1.5" stroke-linecap="round">
+            <rect x="3" y="3" width="18" height="18" rx="4"/>
+            <path d="M9 12L11 14L15 10"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Private by design</h3>
+          <p>Your dreams are yours. No data sold, no ad tracking, no social features. Just a quiet space between you and your unconscious.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Stillward — coming soon to iOS</p>
+  </footer>
+
+</div>
+
+<script>
+// ---- Stars ----
+(function() {
+  const container = document.getElementById('stars');
+  const count = Math.min(80, Math.floor(window.innerWidth * window.innerHeight / 8000));
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('span');
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.setProperty('--dur', (3 + Math.random() * 5) + 's');
+    s.style.setProperty('--delay', (Math.random() * 6) + 's');
+    s.style.setProperty('--peak', (0.15 + Math.random() * 0.35));
+    s.style.width = s.style.height = (1 + Math.random() * 1.2) + 'px';
+    container.appendChild(s);
+  }
+})();
+
+// ---- Scroll animations ----
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+// ---- Supabase waitlist ----
+// ═══════════════════════════════════════════════════
+// SETUP INSTRUCTIONS:
+//
+// 1. Create a Supabase project at https://supabase.com
+//
+// 2. Run this SQL in the Supabase SQL Editor:
+//
+//    create table early_access (
+//      id uuid default gen_random_uuid() primary key,
+//      email text not null unique,
+//      created_at timestamptz default now(),
+//      source text default 'waitlist'
+//    );
+//
+//    -- Enable Row Level Security
+//    alter table early_access enable row level security;
+//
+//    -- Allow anonymous inserts only (no reads)
+//    create policy "Allow anonymous inserts"
+//      on early_access for insert
+//      to anon
+//      with check (true);
+//
+// 3. Replace the two values below with your project's:
+//    - SUPABASE_URL: Settings → API → Project URL
+//    - SUPABASE_ANON_KEY: Settings → API → anon/public key
+//
+// ═══════════════════════════════════════════════════
+
+const SUPABASE_URL = 'https://mlqfdigfcifxixamcsne.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_8VUsKiLhSspAps4p6lpfxg_1eBoGUtR';
+
+async function handleSubmit() {
+  const input = document.getElementById('email-input');
+  const btn = document.getElementById('submit-btn');
+  const msg = document.getElementById('form-message');
+  const email = input.value.trim().toLowerCase();
+
+  // Validate
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    msg.textContent = 'Please enter a valid email.';
+    msg.className = 'form-message error';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '...';
+  msg.textContent = '';
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/early_access`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ email, source: 'waitlist' })
+    });
+
+    if (res.ok || res.status === 201) {
+      // Show success state
+      document.getElementById('form-wrap').style.display = 'none';
+      document.querySelector('.pitch').style.display = 'none';
+      document.getElementById('success-state').classList.add('show');
+    } else if (res.status === 409) {
+      msg.textContent = "You're already on the list — we'll be in touch.";
+      msg.className = 'form-message success';
+      btn.disabled = false;
+      btn.textContent = 'Join waitlist';
+    } else {
+      throw new Error(`${res.status}`);
+    }
+  } catch (err) {
+    msg.textContent = 'Something went wrong. Please try again.';
+    msg.className = 'form-message error';
+    btn.disabled = false;
+    btn.textContent = 'Join waitlist';
+  }
+}
+
+// Submit on Enter
+document.getElementById('email-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') handleSubmit();
+});
+</script>
+</body>
+</html>
